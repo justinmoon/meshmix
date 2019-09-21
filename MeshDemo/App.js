@@ -24,53 +24,61 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const App = () => {
-  return (
-    <Fragment>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </Fragment>
+import { listen } from './mesh'
+import { requestBluetoothPermissions } from './permissions'
+
+//import {
+  //...
+  //DeviceEventEmitter,
+  //...
+//} from 'react-native';
+
+import Bridgefy from 'react-native-bridgefy-sdk';
+
+function registerBridgefy() {
+    Bridgefy.init("5e519275-d471-4524-a36a-397a6ba8d27c",
+    (errorCode, message)=>{
+      console.log('bridgefy error:', errorCode + ":" + message);
+    },
+    (client) => {
+      console.log('bridgefy success:', client);
+      
+      // start bridgely
+      Bridgefy.start()
+
+      // broadcast to others
+      var message = {
+        content:{ 
+          message:"Hello world!!"
+        }
+      };
+      Bridgefy.sendBroadcastMessage(message)
+      
+      // register listeners
+      listen()
+      
+    }
   );
-};
+}
+
+class App extends React.Component {
+
+  componentWillMount() {
+    // request permissions
+    requestBluetoothPermissions()
+    // start bridgefy
+    registerBridgefy()
+  }
+  render () {
+    return (
+      <View>
+        <Text>
+          Hello, world!
+        </Text>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   scrollView: {
