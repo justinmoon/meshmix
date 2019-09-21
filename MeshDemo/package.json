@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "react": "16.8.6",
-    "react-native": "0.60.5"
+    "react-native": "0.60.5",
+    "react-native-bridgefy-sdk": "git+https://github.com/marcosrdz/react-native-bridgefy-sdk.git"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
