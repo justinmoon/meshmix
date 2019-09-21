@@ -1,0 +1,25 @@
+{
+  "name": "meshmix",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justinmoon/meshmix.git"
+  },
+  "contributors": [
+    "Ben Woosley",
+    "Justin Moon"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justinmoon/meshmix/issues"
+  },
+  "homepage": "https://github.com/justinmoon/meshmix#readme",
+  "dependencies": {
+    "bitcoinjs-lib": "^5.1.6"
+  }
+}
