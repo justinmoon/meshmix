@@ -190,6 +190,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-bridgefy-sdk')
 
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";
@@ -199,6 +200,14 @@ dependencies {
       implementation jscFlavor
     }
 }
+
+repositories {
+    maven {
+        url "http://maven.bridgefy.com/artifactory/libs-release-local"
+        artifactUrls = ["http://jcenter.bintray.com/"]
+    }
+}
+
 
 // Run this once to be able to run the application with BUCK
 // puts all compile dependencies into folder libs for BUCK to use
