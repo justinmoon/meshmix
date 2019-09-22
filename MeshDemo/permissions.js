@@ -1,10 +1,10 @@
 import { PermissionsAndroid } from 'react-native';
 
 // copy pasta: https://facebook.github.io/react-native/docs/permissionsandroid
-export async function requestBluetoothPermissions() {
+async function request(permission) {
   try {
     const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      permission,
       {
         title: 'Cool Photo App Camera Permission',
         message:
@@ -23,4 +23,13 @@ export async function requestBluetoothPermissions() {
   } catch (err) {
     console.warn(err);
   }
+}
+console.log('permissions', PermissionsAndroid.PERMISSIONS)
+
+export async function requestAll() {
+  console.log(PermissionsAndroid.PERMISSIONS)
+  await request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+  // await request(PermissionsAndroid.PERMISSIONS.BLUETOOTH)
+  // await request(PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADMIN)
+  // await request(PermissionsAndroid.PERMISSIONS.INTERNET)
 }

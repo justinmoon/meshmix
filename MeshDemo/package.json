@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
+    "serve-xiaomi": "react-native start --port=8081",
+    "serve-lg": "react-native start --port=8082",
+    "run-xiaomi": "react-native run-android --port=8081 --deviceId=2a20ca78",
+    "run-lg": "react-native run-android --port=8082 --deviceId=LML212VLc7543c01",
     "test": "jest",
     "lint": "eslint ."
   },

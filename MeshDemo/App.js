@@ -16,6 +16,7 @@ import {
   StatusBar,
 } from 'react-native';
 
+
 import {
   Header,
   LearnMoreLinks,
@@ -25,7 +26,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import { listen } from './mesh'
-import { requestBluetoothPermissions } from './permissions'
+import { requestAll } from './permissions'
 
 //import {
   //...
@@ -34,6 +35,32 @@ import { requestBluetoothPermissions } from './permissions'
 //} from 'react-native';
 
 import Bridgefy from 'react-native-bridgefy-sdk';
+
+console.log(Bridgefy.getConstants())
+
+function broadcastLoop() {
+  // broadcast to others
+  var message = {
+    content:{ 
+      message:"Hello from xiaomi!"
+    }
+  };
+  console.log('broadcasting')
+  Bridgefy.sendBroadcastMessage(message)
+  
+  // this will emit `onMessageFailed` messages
+  // var message = {
+  //   content:{ 
+  //     message: "Hello world!!",
+  //     language: "English"
+  //   },
+  //   receiver_id: "abc123",
+  // };
+  // Bridgefy.sendMessage(message);
+
+  // see other devices
+  // console.log('devices', Bridgefy.deviceList)
+}
 
 function registerBridgefy() {
     Bridgefy.init("5e519275-d471-4524-a36a-397a6ba8d27c",
@@ -46,28 +73,23 @@ function registerBridgefy() {
       // start bridgely
       Bridgefy.start()
 
-      // broadcast to others
-      var message = {
-        content:{ 
-          message:"Hello world!!"
-        }
-      };
-      Bridgefy.sendBroadcastMessage(message)
+      // broadcat
+      // setInterval(broadcastLoop, 1000)
       
       // register listeners
       listen()
-      
     }
   );
 }
 
 class App extends React.Component {
 
-  componentWillMount() {
+  async componentWillMount() {
     // request permissions
-    requestBluetoothPermissions()
+    await requestAll()
     // start bridgefy
     registerBridgefy()
+
   }
   render () {
     return (
